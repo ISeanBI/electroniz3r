@@ -78,12 +78,3 @@ class WebSocketTaskConnectionSingleton(WebSocketConnection):
         wrapped_code = f"eval(Buffer.from('{code.encode().decode('base64')}', 'base64').toString())"
         cmd = f"{{\"id\":1337,\"method\":\"Runtime.evaluate\",\"params\":{{\"expression\":\"{wrapped_code}\",\"objectGroup\":\"console\",\"includeCommandLineAPI\":true,\"silent\":false,\"returnByValue\":false,\"generatePreview\":true,\"userGesture\":true,\"awaitPromise\":false,\"replMode\":true,\"allowUnsafeEvalBlockedByCSP\":false,\"executionContextId\":1}}}}"
         asyncio.run(self.send_text(cmd))
-
-# Usage example
-async def main():
-    connection = WebSocketTaskConnectionSingleton.shared()
-    connection.delegate = YourConnectionDelegateImplementation()
-    await connection.connect()
-
-if __name__ == "__main__":
-    asyncio.run(main())
